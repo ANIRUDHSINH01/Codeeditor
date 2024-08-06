@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Code Editor</title>
+<style>
+#editor {
+width: 100%;
+height: 500px;
+border: 1px solid #ddd;
+}
+#autocomplete-controls {
+margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<div id="editor"></div>
+<div id="autocomplete-controls">
+<label>Enable Autocomplete:</label>
+<input type="checkbox" id="autocompleteToggle" onchange="toggleAutocomplete()" checked>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/ace-builds@latest/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+const editor = ace.edit('editor');
+editor.setTheme('ace/theme/monokai');
+editor.session.setMode('ace/mode/python'); // Set the mode to Python or any other language
+
+// Enable autocompletion by default
+editor.setOptions({
+enableBasicAutocompletion: true,
+enableLiveAutocompletion: true
+});
+
+// Function to toggle autocompletion
+function toggleAutocomplete() {
+const enabled = document.getElementById('autocompleteToggle').checked;
+editor.setOptions({
+enableBasicAutocompletion: enabled,
+enableLiveAutocompletion: enabled
+});
+}
+
+// Load the Tabnine library
+ace.require('ace/ext/language_tools'); // Required for autocompletion
+const tabnine = ace.require('ace/autocomplete/tabnine');
+
+// Check if Tabnine is available
+if (tabnine) {
+tabnine.setworkerScript('https://cdn.jsdelivr.net/npm/tabnine-ace@latest/dist/tabnine-ace.js');
+} else {
+console.error('Tabnine could not be loaded.');
+}
+</script>
+</body>
+  </html>
+
