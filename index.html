@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Code Editor</title>
+<title>Web Code Editor with Autocomplete</title>
 <style>
 #editor {
 width: 100%;
@@ -44,15 +44,14 @@ enableLiveAutocompletion: enabled
 
 // Load the Tabnine library
 ace.require('ace/ext/language_tools'); // Required for autocompletion
-const tabnine = ace.require('ace/autocomplete/tabnine');
 
-// Check if Tabnine is available
-if (tabnine) {
+// Check if Tabnine is available and load it
+if (typeof ace.require('ace/autocomplete/tabnine') !== 'undefined') {
+const tabnine = ace.require('ace/autocomplete/tabnine');
 tabnine.setworkerScript('https://cdn.jsdelivr.net/npm/tabnine-ace@latest/dist/tabnine-ace.js');
 } else {
-console.error('Tabnine could not be loaded.');
+console.error('Tabnine is not available.');
 }
 </script>
 </body>
-  </html>
-
+</html>
